@@ -1,24 +1,24 @@
 declare interface Axios {
-  request(config: AxiosRequestConfig): AxiosPromise
+  request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
-  get(url: string, config?: AxiosRequestConfig): AxiosPromise
+  get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  delete<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  delete(url: string, config?: AxiosRequestConfig): AxiosPromise
+  head<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  head(url: string, config?: AxiosRequestConfig): AxiosPromise
+  options<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  options(url: string, config?: AxiosRequestConfig): AxiosPromise
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
 declare interface AxiosInstance extends Axios {
-  (config: AxiosRequestConfig): AxiosPromise
-  (url: string, config?: AxiosRequestConfig): AxiosPromise
+  <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
+  <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
 declare interface AxiosRequestConfig {
@@ -47,8 +47,8 @@ type Method =
   | 'patch'
   | 'PATCH'
 
-declare interface AxiosResponse {
-  data: any
+declare interface AxiosResponse<T = any> {
+  data: T
   status: number
   statusText: string
   headers: any
@@ -56,7 +56,7 @@ declare interface AxiosResponse {
   request: any
 }
 
-declare interface AxiosPromise extends Promise<AxiosResponse> {}
+declare interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
 
 declare interface AxiosError extends Error {
   isAxiosError: boolean
@@ -64,4 +64,24 @@ declare interface AxiosError extends Error {
   code?: string | null
   request?: any
   response?: AxiosResponse
+}
+
+declare interface ResponseData<T = any> {
+  /**
+   * 状态码
+   * @type { number }
+   */
+  code: number
+
+  /**
+   * 数据
+   * @type { T }
+   */
+  result: T
+
+  /**
+   * 消息
+   * @type { string }
+   */
+  message: string
 }

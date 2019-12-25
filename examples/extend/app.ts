@@ -24,8 +24,28 @@ import axios from '../../src'
 //
 // axios.head('/extend/head')
 
-axios.post('/extend/post', { msg: 'post' })
+// axios.post('/extend/post', { msg: 'post' })
+//
+// axios.put('/extend/put', { msg: 'put' })
+//
+// axios.patch('/extend/patch', { msg: 'patch' })
 
-axios.put('/extend/put', { msg: 'put' })
+interface User {
+  name: string
+  age: number
+}
 
-axios.patch('/extend/patch', { msg: 'patch' })
+function getUser<T>() {
+  return axios<ResponseData<T>>('/extend/user')
+    .then(res => res.data)
+    .catch(err => console.error(err))
+}
+
+async function test() {
+  const user = await getUser<User>()
+  if (user) {
+    console.log(user.result.name)
+  }
+}
+
+test()
