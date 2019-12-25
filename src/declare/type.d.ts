@@ -18,6 +18,7 @@ declare interface Axios {
 
 declare interface AxiosInstance extends Axios {
   (config: AxiosRequestConfig): AxiosPromise
+  (url: string, config?: AxiosRequestConfig): AxiosPromise
 }
 
 declare interface AxiosRequestConfig {
