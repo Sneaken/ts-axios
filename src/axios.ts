@@ -3,6 +3,7 @@ import { extend } from './helpers/util'
 
 function createInstance(): AxiosInstance {
   const context = new Axios()
+  console.log(context)
   const instance = Axios.prototype.request.bind(context)
 
   extend(instance, context)

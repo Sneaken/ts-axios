@@ -1,4 +1,8 @@
 declare interface Axios {
+  interceptors: {
+    request: AxiosInterceptorManager<AxiosRequestConfig>
+    response: AxiosInterceptorManager<AxiosResponse>
+  }
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
@@ -67,21 +71,28 @@ declare interface AxiosError extends Error {
 }
 
 declare interface ResponseData<T = any> {
-  /**
-   * 状态码
-   * @type { number }
-   */
   code: number
 
-  /**
-   * 数据
-   * @type { T }
-   */
   result: T
 
-  /**
-   * 消息
-   * @type { string }
-   */
   message: string
+}
+
+declare interface AxiosInterceptorManager<T> {
+  use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number
+
+  eject(id: number): void
+}
+
+declare interface ResolvedFn<T = any> {
+  (val: T): T | Promise<T>
+}
+
+declare interface RejectedFn {
+  (error: any): any
+}
+
+declare interface Interceptor<T> {
+  resolved: ResolvedFn<T>
+  rejected?: RejectedFn
 }
